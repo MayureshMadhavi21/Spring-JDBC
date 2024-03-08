@@ -1,0 +1,67 @@
+Spring JDBC is powerful mechanism, to connect to the database and execute SQL queries.
+
+JAVA program <->  Spring JDBC(jdbcTemplate)  <-> DB
+
+JDBC - java database connectivity
+JDBC is an API to perform operation with database.
+
+Problems of JDBC:-
+we need to write lot of code.
+example: Every time we have to write below code while executing queries,
+    connection open
+    create statement
+    execute statement
+    connection close
+
+SqlException handling issue > checked exception > need to write code in try-catch for SQL operations
+
+Solutions to JDBC problems given by Spring JDBC.
+Spring JDBC provides class JdbcTemplate which has all the important methods to perform operations with database.
+JdbcTemplate will take care of opening connection, closing connection we just have to pass queries to its object
+
+
+Creation of jdbcTemplate object > queries fire > insert,update,delete,select
+DataSource(Interface) >  jdbcTemplate will use object of this interface.
+object contains all info required to connect with database.
+Implementation class of DataSource(Interface) > DriverManagerDataSource
+
+DriverManagerDataSource implements DataSource
+
+Basically object of DriverManagerDataSource injected in dataSource property of jdbcTemplate and all info required to connect with database is added in it.
+DriverManagerDataSource (given this properties) :- driverClassName=?
+                                   url=?
+                                   username=?
+                                   password=?
+                                 
+JdbcTemplate methods ->
+
+update() -> insert,update,delete queries
+execute() -> select queries
+
+Steps to create new project
+File -> New -> Maven project -> new maven project popup > catalog : internal > artifact id : maven-archetype-quickstart > next...project details> group id(package uniquely identify project), artifact id(project name) > finish.
+
+
+Db command:-
+show databases;
+create database springjdbc;
+use springjdbc;
+create table student(id int primary key, name varchar(100) not null , city varchar(200));
+show tables;
+insert into student(id,name,city) values (1,'Mayuresh','Mumbai');
+select * from student;
+desc student;
+
+Selecting data using spring jdbc:-
+
+fetching a single object/row:-
+public T queryForObject(String sql, RowMapper<T>rowMapper,Object args)
+
+fetching a multiple object/row:-
+public List<T> query(String sql, RowMapper<T>rowMapper)
+               String sql :  select query 
+               
+RowMapper:- It converts result set to object
+
+ResultSet Object -> Row Mapper -> Class object
+                       
